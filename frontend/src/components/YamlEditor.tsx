@@ -13,6 +13,9 @@ const YamlEditor: React.FC<YamlEditorProps> = ({ value, onChange, error }) => {
       <Typography variant="h6" gutterBottom>
         YAML Editor
       </Typography>
+      <Typography variant="body2" color="text.secondary" gutterBottom>
+        Edit the YAML configuration directly
+      </Typography>
 
       <Box>
         <textarea

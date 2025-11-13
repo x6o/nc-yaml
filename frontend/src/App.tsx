@@ -87,7 +87,7 @@ const App: React.FC = () => {
           setSaveError(null);
           setSaveSuccess(true);
         } catch (error) {
-          setSaveError(`Failed to save: ${(error as Error).message}`);
+          setSaveError((error as Error).message);
         }
       }, 275); // ¯\_(ツ)_/¯ https://stackoverflow.com/questions/42361485/how-long-should-you-debounce-text-input#comment79931812_44755058
     },[]);
@@ -167,18 +167,18 @@ const App: React.FC = () => {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h3" component="h1" gutterBottom>
-          NC YAML
+          NC YAML Editor
         </Typography>
       </Box>
 
       {/* Errors go here */}
       {saveError && (
-        <Box>
+        <Box sx={{ mb: 2, p: 2, bgcolor: 'error.light', color: 'error.contrastText', borderRadius: 1 }}>
           Error: {saveError}
         </Box>
       )}
       {validationError && (
-        <Box>
+        <Box sx={{ mb: 2, p: 2, bgcolor: 'warning.light', color: 'error.contrastText', borderRadius: 1 }}>
           Warning: {validationError}
         </Box>
       )}

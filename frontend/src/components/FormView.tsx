@@ -47,15 +47,16 @@ const FormView: React.FC<FormViewProps> = ({ config, onChange }) => {
   };
 
   return (
-    <Paper>
+    <Paper elevation={2} sx={{ p: 2 }}>
       <Typography variant="h6" gutterBottom>
         Form View
       </Typography>
   
-      <Box>
-        <Typography>
+      <Box sx={{ mt: 3 }}>
+        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'bold' }}>
           Server Configuration
         </Typography>
+        
 
         <TextField
           fullWidth
@@ -71,6 +72,7 @@ const FormView: React.FC<FormViewProps> = ({ config, onChange }) => {
           type="number"
           value={config.server?.port || ''}
           onChange={(e) => handleServerChange('port', parseInt(e.target.value, 10))}
+          margin="normal"
         />
 
         <FormControlLabel
@@ -83,13 +85,13 @@ const FormView: React.FC<FormViewProps> = ({ config, onChange }) => {
           label="Enable SSL"
         />
 
-        <Divider />
+        <Divider sx={{ my: 3 }}/>
 
-        <Typography >
+        <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'bold' }}>
           Logging Configuration
         </Typography>
 
-        <FormControl component="fieldset">
+        <FormControl component="fieldset" sx={{ mb: 2 }}>
           <FormLabel component="legend">Log Level</FormLabel>
           <RadioGroup
             value={config.logging?.level || 'debug'}
@@ -107,6 +109,7 @@ const FormView: React.FC<FormViewProps> = ({ config, onChange }) => {
           label="Log File"
           value={config.logging?.file || ''}
           onChange={(e) => handleLoggingChange('file', e.target.value)}
+          margin="normal"
         />
       </Box>
     </Paper>
