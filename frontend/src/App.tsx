@@ -27,6 +27,8 @@ const App: React.FC = () => {
 
   // Ref to prevent circular updates
   const isUpdatingRef = useRef<boolean>(false);
+  // debounce timeout
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   /**
    * Load configuration from backend
@@ -56,30 +58,38 @@ const App: React.FC = () => {
   };
 
   const debouncedSave = useCallback(
-    async (configData: Config) => {
-      try {
-        console.log('Saving config:', configData);
-
-        // PUT in BE
-        const response = await fetch('/api/config', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(configData),
-        });
-
-        const result = await response.json();
-
-        if (!result.success) {
-          throw new Error(result.error || 'Failed to save configuration');
-        }
-
-        setSaveError(null);
-        setSaveSuccess(true);
-      } catch (error) {
-        setSaveError(`Failed to save: ${(error as Error).message}`);
+    (configData: Config) => {
+      // Clear existing timeout
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
       }
+
+      // Set new timeout for 300ms
+      saveTimeoutRef.current = setTimeout(async () => {
+        try {
+          console.log('Saving config:', configData);
+
+          // PUT in BE
+          const response = await fetch('/api/config', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(configData),
+          });
+
+          const result = await response.json();
+
+          if (!result.success) {
+            throw new Error(result.error || 'Failed to save configuration');
+          }
+
+          setSaveError(null);
+          setSaveSuccess(true);
+        } catch (error) {
+          setSaveError(`Failed to save: ${(error as Error).message}`);
+        }
+      }, 300);
     },[]);
 
   /**
@@ -132,6 +142,15 @@ const App: React.FC = () => {
   // Load initial configuration
   useEffect(() => {
     loadConfig();
+  }, []);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
   }, []);
 
   // Loading state
