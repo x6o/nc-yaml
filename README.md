@@ -90,3 +90,15 @@ Open `http://localhost:3000`
 5. **Better Errors**: More descriptive errors that includes the affected fields 
 6. **Success Indicators**: Add more UX messages (like Saved to database)
 7. **Better comments**: I would have improved the BE comments to be more descriptive, with argument and return type descriptions
+
+
+## Not implemented:
+
+**Extra Code completion task**: I did not have time to add it, but it would had been something like this:
+
+- Add socket libraries for both frontend and backend projects.
+- Add some sort of completion "engine" in the backend that based on the user's FE cursor position, indentetion level and key would return completion suggestions.
+- On the frontend I would debounce the completion requests like we did for the saving config already implemented.
+- Also on the frontend, a CompletionPopup component, with arrow up/down and enter/escape handling.
+- The YamlEditor component would be updated to a ref and keep track of user cursor position.
+
