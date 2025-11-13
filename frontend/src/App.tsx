@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Container, Typography, Box, CircularProgress } from '@mui/material';
+import YamlEditor from './components/YamlEditor';
+import FormView from './components/FormView';
 import './App.css';
 
 // Temp config
@@ -133,15 +135,13 @@ const App: React.FC = () => {
 
       <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' } }}>
         <Box sx={{ flex: 1 }}>
-          <Box>
-            YAML Editor
-          </Box>
+          <YamlEditor/>
         </Box>
 
         <Box sx={{ flex: 1 }}>
-          <Box>
-            Form View
-          </Box>
+          {config && (
+            <FormView/>
+          )}
         </Box>
       </Box>
     </Container>
