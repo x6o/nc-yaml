@@ -80,6 +80,20 @@ const App: React.FC = () => {
 
     setYamlText(value);
     console.log('YAML changed:', value);
+
+    // update config
+    try {
+      const parsed = JSON.parse(value);
+      setValidationError(null);
+
+      isUpdatingRef.current = true;
+      setConfig(parsed);
+      isUpdatingRef.current = false;
+
+      debouncedSave(parsed);
+    } catch (error) {
+      setValidationError(`Invalid JSON: ${(error as Error).message}`);
+    }
   };
 
   /**
@@ -91,8 +105,12 @@ const App: React.FC = () => {
       return;
     }
 
+    // update config
     setConfig(newConfig);
 
+    isUpdatingRef.current = true;
+    setYamlText(JSON.stringify(newConfig, null, 2));
+    isUpdatingRef.current = false;
 
     console.log('Form changed:', newConfig);
     debouncedSave(newConfig);
