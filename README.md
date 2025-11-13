@@ -5,7 +5,7 @@ A fullstack web app for editing YAML configuration file with DB synchronization,
 
 **Tech Stack:**
 - **Front**: React 19, TypeScript, MUI for styles
-- **Backend**: Flask, jsonschema
+- **Backend**: Flask, jsonschema, Flask-CORS, PyYAML
 
 ## How to Run
 
