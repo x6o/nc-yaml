@@ -70,14 +70,14 @@ Open `http://localhost:3000`
 4. Please don't run this in prod haha
 
 ### Trade-offs
-1. **No Real YAML Parsing Yet**: Currently parsing JSON instead of YAML in the FE for simplicity. Next step would be using something like « `js-yaml`.
+1. ~~**No Real YAML Parsing Yet**: Currently parsing JSON instead of YAML in the FE for simplicity. Next step would be using something like « `js-yaml`.~~ Realized it's an easy add/win, so added it.
 2. **Basic Text Editor**: Using a plain textarea of a build-in code editor with syntax highlighting.
 
 
 ## Improvements (If I had time)
 
 1. **No unit tests**: For the sake of speed and time management, I did not implement any testing whatsoever, but it would be a much needed improvement.
-2. **Real YAML Support**: Use actual YAML parsing with `js-yaml` in the Frontend
+2. ~~**Real YAML Support**: Use actual YAML parsing with `js-yaml` in the Frontend~~ Added.
 3. **Integrate a code editor**
    - Syntax highlighting
    - Line numbers
@@ -85,3 +85,4 @@ Open `http://localhost:3000`
 4. **Clientside Validation**: Add frontend validation to relieve the BE api calls
 5. **Better Errors**: More descriptive errors that includes the affected fields 
 6. **Success Indicators**: Add more UX messages (like Saved to database)
+7. **Better comments**: I would have improved the BE comments to be more descriptive, with argument and return type descriptions

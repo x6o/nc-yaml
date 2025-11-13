@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Container, Typography, Box, CircularProgress } from '@mui/material';
+import * as yaml from 'js-yaml';
 import YamlEditor from './components/YamlEditor';
 import FormView from './components/FormView';
 import './App.css';
@@ -46,7 +47,7 @@ const App: React.FC = () => {
 
       const configData = result.data;
       setConfig(configData);
-      setYamlText(JSON.stringify(configData, null, 2));
+      setYamlText(yaml.dump(configData));
 
       setValidationError(null);
       setSaveError(null);
@@ -106,7 +107,7 @@ const App: React.FC = () => {
 
     // update config
     try {
-      const parsed = JSON.parse(value);
+      const parsed = yaml.load(value) as Config;
       setValidationError(null);
 
       isUpdatingRef.current = true;
@@ -115,7 +116,7 @@ const App: React.FC = () => {
 
       debouncedSave(parsed);
     } catch (error) {
-      setValidationError(`Invalid JSON: ${(error as Error).message}`);
+      setValidationError(`Invalid YAML: ${(error as Error).message}`);
     }
   };
 
@@ -132,7 +133,7 @@ const App: React.FC = () => {
     setConfig(newConfig);
 
     isUpdatingRef.current = true;
-    setYamlText(JSON.stringify(newConfig, null, 2));
+    setYamlText(yaml.dump(newConfig));
     isUpdatingRef.current = false;
 
     console.log('Form changed:', newConfig);
