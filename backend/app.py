@@ -36,7 +36,7 @@ def get_config():
             "data": config
             }), 200
     except Exception as e:
-        return jsonify({"success": False, "error": e}), 500
+        return jsonify({"success": False, "error": str(e)}), 500
 
 
 @app.route('/api/config', methods=['PUT'])
@@ -49,15 +49,14 @@ def update_config():
             return jsonify({"success": False, "error": "No data provided"}), 400
 
         # TODO: Validate config
-
-        write_config(validated_config)
+        write_config(new_config)
 
         return jsonify({
             "success": True,
             "message": "Configuration updated successfully"
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "error": f"Server error: {e}"}), 500
+        return jsonify({"success": False, "error": f"Server error: {str(e)}"}), 500
 
 
 if __name__ == '__main__':

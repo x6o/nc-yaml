@@ -34,20 +34,17 @@ const App: React.FC = () => {
   const loadConfig = async (): Promise<void> => {
     try {
       setLoading(true);
-      // Temp mock data
-      const mockConfig: Config = {
-        server: {
-          host: "127.0.0.1",
-          port: 3000,
-          use_ssl: true
-        },
-        logging: {
-          level: "debug",
-          file: "./debug.log"
-        }
-      };
-      setConfig(mockConfig);
-      setYamlText(JSON.stringify(mockConfig, null, 2)); // Temporary placeholder
+
+      const response = await fetch('/api/config');
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to load configuration');
+      }
+
+      const configData = result.data;
+      setConfig(configData);
+      setYamlText(JSON.stringify(configData, null, 2));
 
       setValidationError(null);
       setSaveError(null);
@@ -62,6 +59,22 @@ const App: React.FC = () => {
     async (configData: Config) => {
       try {
         console.log('Saving config:', configData);
+
+        // PUT in BE
+        const response = await fetch('/api/config', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(configData),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+          throw new Error(result.error || 'Failed to save configuration');
+        }
+
         setSaveError(null);
         setSaveSuccess(true);
       } catch (error) {
