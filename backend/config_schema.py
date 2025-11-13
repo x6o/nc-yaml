@@ -1,5 +1,3 @@
-# Configuration schema definition
-
 # Allowed ports range as mentioned here: 
 # https://arubanetworking.hpe.com/techdocs/AOS-S/16.10/ATMG/KB/content/kb/tcp-por-num-ran.htm
 
@@ -34,7 +32,7 @@ CONFIG_SCHEMA = {
             "properties": {
                 "level": {
                     "type": "string",
-                    "enum": ["debug", "info", "error"]
+                    "enum": ["debug", "info", "warn", "error"]
                 },
                 "file": {
                     "type": "string",
