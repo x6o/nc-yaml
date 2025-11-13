@@ -64,7 +64,7 @@ const App: React.FC = () => {
         clearTimeout(saveTimeoutRef.current);
       }
 
-      // Set new timeout for 300ms
+      // Set new timeout for 275ms
       saveTimeoutRef.current = setTimeout(async () => {
         try {
           console.log('Saving config:', configData);
@@ -89,7 +89,7 @@ const App: React.FC = () => {
         } catch (error) {
           setSaveError(`Failed to save: ${(error as Error).message}`);
         }
-      }, 300);
+      }, 275); // ¯\_(ツ)_/¯ https://stackoverflow.com/questions/42361485/how-long-should-you-debounce-text-input#comment79931812_44755058
     },[]);
 
   /**
@@ -144,7 +144,7 @@ const App: React.FC = () => {
     loadConfig();
   }, []);
 
-  // Cleanup timeout on unmount
+    // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (saveTimeoutRef.current) {

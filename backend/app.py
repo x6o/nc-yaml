@@ -2,6 +2,7 @@ import os
 import yaml
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from validation import validate_config
 from config_schema import DEFAULT_CONFIG
 
 app = Flask(__name__)
@@ -48,8 +49,8 @@ def update_config():
         if not new_config:
             return jsonify({"success": False, "error": "No data provided"}), 400
 
-        # TODO: Validate config
-        write_config(new_config)
+        validated_config = validate_config(new_config)
+        write_config(validated_config)
 
         return jsonify({
             "success": True,
