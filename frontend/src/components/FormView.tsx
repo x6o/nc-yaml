@@ -13,17 +13,45 @@ import {
   Divider,
 } from '@mui/material';
 
-interface FormViewProps {
+// Same as app.tsx
+interface Config {
+  server: {
+    host: string;
+    port: number;
+    use_ssl: boolean;
+  };
+  logging: {
+    level: 'debug' | 'info' | 'warn' | 'error';
+    file: string;
+  };
 }
 
-const FormView: React.FC<FormViewProps> = ({ }) => {
+interface FormViewProps {
+  config: Config;
+  onChange: (config: Config) => void;
+}
+
+const FormView: React.FC<FormViewProps> = ({ config, onChange }) => {
+  const handleServerChange = (field: any, value: any) => {
+    onChange({
+      ...config,
+      server: { ...config.server, [field]: value },
+    });
+  };
+
+  const handleLoggingChange = (field: any, value: string) => {
+    onChange({
+      ...config,
+      logging: { ...config.logging, [field]: value },
+    });
+  };
 
   return (
     <Paper>
       <Typography variant="h6" gutterBottom>
         Form View
       </Typography>
-
+  
       <Box>
         <Typography>
           Server Configuration
@@ -32,7 +60,8 @@ const FormView: React.FC<FormViewProps> = ({ }) => {
         <TextField
           fullWidth
           label="Host"
-          value="Host val"
+          value={config.server?.host || ''}
+          onChange={(e) => handleServerChange('host', e.target.value)}
           helperText="Hostname or IP address"
         />
 
@@ -40,13 +69,15 @@ const FormView: React.FC<FormViewProps> = ({ }) => {
           fullWidth
           label="Port"
           type="number"
-          value="port val"
+          value={config.server?.port || ''}
+          onChange={(e) => handleServerChange('port', parseInt(e.target.value, 10))}
         />
 
         <FormControlLabel
           control={
             <Switch
-              checked={true}
+              checked={config.server?.use_ssl || false}
+              onChange={(e) => handleServerChange('use_ssl', e.target.checked)}
             />
           }
           label="Enable SSL"
@@ -61,9 +92,9 @@ const FormView: React.FC<FormViewProps> = ({ }) => {
         <FormControl component="fieldset">
           <FormLabel component="legend">Log Level</FormLabel>
           <RadioGroup
-            value="debug"
+            value={config.logging?.level || 'debug'}
+            onChange={(e) => handleLoggingChange('level', e.target.value)}
           >
-
             <FormControlLabel value="debug" control={<Radio />} label="Debug" />
             <FormControlLabel value="info" control={<Radio />} label="Info" />
             <FormControlLabel value="warn" control={<Radio />} label="Warn" />
@@ -74,7 +105,8 @@ const FormView: React.FC<FormViewProps> = ({ }) => {
         <TextField
           fullWidth
           label="Log File"
-          value="Log file"
+          value={config.logging?.file || ''}
+          onChange={(e) => handleLoggingChange('file', e.target.value)}
         />
       </Box>
     </Paper>

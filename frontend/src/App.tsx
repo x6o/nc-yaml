@@ -144,7 +144,10 @@ const App: React.FC = () => {
 
         <Box sx={{ flex: 1 }}>
           {config && (
-            <FormView/>
+            <FormView
+              config={config}
+              onChange={handleFormChange}
+            />
           )}
         </Box>
       </Box>
