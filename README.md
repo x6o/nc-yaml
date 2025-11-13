@@ -16,6 +16,8 @@ A fullstack web app for editing YAML configuration file with DB synchronization,
 
 ### Backend Setup
 
+0. Clone the repository.
+
 1. Navigate to the backend directory.
 
 2. Create and activate a virtual environment:
@@ -46,8 +48,10 @@ Backend runs at `http://127.0.0.1:5000`
 1. Navigate to the frontend directory:
 
 2. Install dependencies:
+
+Note: Use `--legacy-peer-deps` due to a peer dependency conflict between TypeScript and `react-scripts`.
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 3. Start the React dev server:
