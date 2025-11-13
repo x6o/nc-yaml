@@ -135,7 +135,11 @@ const App: React.FC = () => {
 
       <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' } }}>
         <Box sx={{ flex: 1 }}>
-          <YamlEditor/>
+          <YamlEditor
+            value={yamlText}
+            onChange={handleYamlChange}
+            error={validationError}
+          />
         </Box>
 
         <Box sx={{ flex: 1 }}>
